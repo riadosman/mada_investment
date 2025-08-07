@@ -50,7 +50,7 @@ export default function Hero() {
                       href="/start"
                       className="rounded-xl bg-primary lg:px-6 lg:py-4 px-12 py-6 text-xl font-semibold text-white shadow-xs hover:bg-secondary duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                      سجل الان !
+                      فتح حساب
                     </Link>
                   </div>
                 </div>

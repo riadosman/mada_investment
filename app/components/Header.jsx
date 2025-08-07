@@ -109,7 +109,7 @@ export default function Example() {
             href="/start"
             className="text-sm/6 border-2 border-primary rounded-xl w-fit px-4 py-2 hover:bg-primary hover:text-white duration-300 gap-x-4 flex items-center font-semibold text-gray-900"
           >
-            سجل الان <span aria-hidden="true">&larr;</span>
+            فتح حساب <span aria-hidden="true">&larr;</span>
           </Link>
         </div>
       </nav>
@@ -164,7 +164,7 @@ export default function Example() {
                   href="/start"
                   className="text-sm/6 gap-x-4 flex items-center font-semibold text-gray-900"
                 >
-                  سجل الان <span aria-hidden="true">&larr;</span>
+                  فتح حساب <span aria-hidden="true">&larr;</span>
                 </Link>
               </div>
             </div>
