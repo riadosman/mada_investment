@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export async function POST(request) {
   try {
     const body = await request.json();
