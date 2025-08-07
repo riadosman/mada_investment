@@ -30,7 +30,7 @@ export default function Hero() {
         <div className="relative isolate px-6 md:-mt-20 lg:px-8 z-10">
           <div className="">
             <div className="relative isolate px-6 md:-mt-20 lg:px-8">
-              <div className="mx-auto max-w-2xl py-44 sm:py-48 lg:py-64">
+              <div className="mx-auto max-w-2xl py-28 sm:py-48 lg:py-64">
                 <div className="sm:mb-8 flex justify-center">
                   <div className="relative rounded-full px-3 py-1 text-sm/6 text-primary ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                     مع تتبع كامل للسوق السعودي و العالمي
