@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { User, Mail, Phone, Send, CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Start = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const Start = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
-
+  const route = useRouter();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -36,7 +37,7 @@ const Start = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          alert("تم الارسال بنجاح");
+          route.push("/success");
           setIsSubmitted(true);
           setFormData({
             name: "",
