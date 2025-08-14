@@ -11,19 +11,16 @@ export default function Hero() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative overflow-hidden ">
+    <div className="relative overflow-hidden">
       {/* YouTube Video Background */}
       <div className="relative w-full h-screen overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <iframe
           className="absolute top-0 left-0 w-full h-full object-cover -z-10"
-        >
-          <source src="/back.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+          src="https://www.youtube.com/embed/KEm1EAxk_8s?autoplay=1&loop=1&playlist=KEm1EAxk_8s&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        ></iframe>
 
         {/* Black overlay */}
         <div className="absolute inset-0 bg-black opacity-50 -z-5"></div>
