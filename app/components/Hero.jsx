@@ -32,15 +32,15 @@ export default function Hero() {
             <div className="relative isolate px-6 md:-mt-20 lg:px-8">
               <div className="mx-auto max-w-2xl py-28 sm:py-48 lg:py-64">
                 <div className="sm:mb-8 flex justify-center">
-                  <div className="hidden md:block relative rounded-full px-3 py-1 text-sm/6 text-primary ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                  <div className="hidden md:block relative rounded-full px-3 py-1 text-sm/6 text-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                     مع تتبع كامل للسوق السعودي و العالمي
                   </div>
                 </div>
                 <div className="text-center flex items-center flex-col mt-42 md:mt-0">
                   <h1 className="text-2xl leading-10 md:leading-20 font-semibold tracking-tight text-balance text-white sm:text-7xl">
-                    شركة مدى للاستثمار استثمار أمن لأبعد مدى
+                    شركة ابيان للاستثمار استثمار
                   </h1>
-                  <p className="hidden md:block mt-8 text-lg font-medium text-pretty text-primary sm:text-xl/8">
+                  <p className="hidden md:block mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8">
                     بخبرتنا في السوق السعودي ورؤيتنا العالمية، نضع بين يديك
                     حلولًا استثمارية متكاملة تجمع بين التحليل الدقيق والتخطيط
                     الذكي.

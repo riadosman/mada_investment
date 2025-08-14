@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { CheckCircle, Home, Mail, ArrowRight } from "lucide-react";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
 
 const SuccessPage = () => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     // Trigger animations on mount
@@ -34,7 +36,7 @@ const SuccessPage = () => {
       <div
         className="min-h-screen mt-24 p-8 flex items-center justify-center"
         style={{
-          "--primary-color": "#03e396",
+          "--primary-color": "#3D4BEA",
           "--secondary-color": "#03aff1",
           background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
         }}
@@ -165,7 +167,7 @@ const SuccessPage = () => {
                   style={{
                     background: `linear-gradient(135deg, var(--primary-color), var(--secondary-color))`,
                   }}
-                  onClick={() => window.location.reload()}
+                  onClick={() => router.push("/start")}
                 >
                   <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                   <span>إرسال رسالة أخرى</span>
@@ -173,7 +175,7 @@ const SuccessPage = () => {
 
                 <button
                   className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-all duration-300 transform hover:scale-105"
-                  onClick={() => window.history.back()}
+                  onClick={() => router.push("/")}
                 >
                   <Home className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                   <span>العودة للرئيسية</span>

@@ -10,7 +10,7 @@ const Start = () => {
     email: "",
     phone: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const route = useRouter();
@@ -22,34 +22,27 @@ const Start = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-
-    // Simulate form submission
-    fetch("/api/send-to-google", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === "success") {
-          route.push("/success");
-          setIsSubmitted(true);
-          setFormData({
-            name: "",
-            surname: "",
-            email: "",
-            phone: "",
-          });
-        } else {
-          alert("خطا يرجى المحاولة مرة اخرى");
-        }
-      })
-      .catch((err) => alert("Error: " + err));
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/send-to-google", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        setIsSubmitted(true);
+        route.push("/success");
+        setFormData({ name: "", surname: "", email: "", phone: "" });
+      } else {
+        setError("خطأ: يرجى المحاولة مرة أخرى");
+      }
+    } catch (err) {
+      setError("حدث خطأ في الاتصال بالسيرفر");
+    }
+    setIsLoading(false);
   };
 
   const inputFields = [
@@ -91,7 +84,7 @@ const Start = () => {
     <div
       className="min-h-screen mt-12 p-8 flex items-center justify-center"
       style={{
-        "--primary-color": "#03e396",
+        "--primary-color": "#3D4BEA",
         "--secondary-color": "#03aff1",
         background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
       }}
@@ -293,7 +286,7 @@ const Start = () => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  disabled={isSubmitted}
+                  disabled={isLoading || isSubmitted}
                   className={`group flex items-center gap-3 px-8 py-4 rounded-xl text-white font-bold shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
                     isSubmitted ? "scale-105" : ""
                   }`}
@@ -306,7 +299,13 @@ const Start = () => {
                   ) : (
                     <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   )}
-                  <span>{isSubmitted ? "تم الإرسال بنجاح" : "إرسال الان"}</span>
+                  <span>
+                    {isLoading
+                      ? "جاري الإرسال..."
+                      : isSubmitted
+                      ? "تم الإرسال"
+                      : "إرسال الآن"}
+                  </span>
                 </button>
               </div>
             </form>

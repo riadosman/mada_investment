@@ -16,7 +16,7 @@ const Footer = () => {
     <footer
       className="relative overflow-hidden"
       style={{
-        "--primary-color": "#03e396",
+        "--primary-color": "#3D4BEA",
         "--secondary-color": "#03aff1",
         background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
       }}
@@ -163,7 +163,7 @@ const Footer = () => {
                 },
                 {
                   Icon: Globe,
-                  text: "www.madainvestment.com",
+                  text: "www.abyaninvestment.com",
                   type: "website",
                 },
               ].map(({ Icon, text, type }, index) => (

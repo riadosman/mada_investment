@@ -4,7 +4,7 @@ body {
   font-family: "Cairo", sans-serif;
 }
 :root {
-  --primary-color: #03e396;
+  --primary-color: #3d4bea;
   --secondary-color: #03aff1;
   --primary-gradient: linear-gradient(
     to right,
@@ -13,7 +13,7 @@ body {
   );
 }
 @theme {
-  --color-primary: #03e396;
+  --color-primary: #3d4bea;
   --color-secondary: #03aff1;
 }
 html {

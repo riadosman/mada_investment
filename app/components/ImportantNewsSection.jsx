@@ -71,7 +71,7 @@ const ImportantNewsSection = () => {
       className="min-h-screen p-8 relative overflow-hidden"
       id="news"
       style={{
-        "--primary-color": "#03e396",
+        "--primary-color": "#3D4BEA",
         "--secondary-color": "#03aff1",
         background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
       }}
