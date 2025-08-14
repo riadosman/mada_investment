@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { User, Mail, Phone, Send, CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-
+import Swal from "sweetalert2";
 const Start = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,10 +21,23 @@ const Start = () => {
       [name]: value,
     }));
   };
-
+  const isSaudiPhone = (phone) => {
+    const saudiPattern = /^(\+9665\d{8}|05\d{8})$/;
+    return saudiPattern.test(phone);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    if (!isSaudiPhone(formData.phone)) {
+      Swal.fire({
+        title: "خطا !",
+        text: "رقم الجوال غير صحيح فقط الارقام السعودية مسموحة",
+        icon: "error",
+        confirmButtonText: "اغلاق",
+      });
+      setIsLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/send-to-google", {
         method: "POST",
@@ -34,12 +47,14 @@ const Start = () => {
       const data = await res.json();
       if (data.status === "success") {
         setIsSubmitted(true);
+        setIsLoading(false);
         route.push("/success");
         setFormData({ name: "", surname: "", email: "", phone: "" });
       } else {
         setError("خطأ: يرجى المحاولة مرة أخرى");
       }
     } catch (err) {
+      setIsLoading(false);
       setError("حدث خطأ في الاتصال بالسيرفر");
     }
     setIsLoading(false);
@@ -74,7 +89,7 @@ const Start = () => {
       name: "phone",
       label: "رقم الهاتف",
       type: "tel",
-      placeholder: "+966 5X XXX XXXX",
+      placeholder: "+9665XXXXXXXX",
       icon: Phone,
       required: true,
     },
