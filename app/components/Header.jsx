@@ -79,7 +79,7 @@ export default function Example() {
             href="/"
             className="-m-1.5 p-1.5 flex items-center flex-row-reverse gap-x-4"
           >
-            <span>ابيان للاستثمار</span>
+            <span>ابيان المالية</span>
             <img alt="" src="/logo.png" className="h-8 w-auto" />
           </Link>
         </div>
@@ -125,7 +125,7 @@ export default function Example() {
               href="/"
               className="-m-1.5 p-1.5 flex items-center flex-row-reverse gap-x-4"
             >
-              <span>ابيان للاستثمار</span>
+              <span>ابيان المالية</span>
               <img alt="" src="/logo.png" className="h-8 w-auto rounded-full" />
             </Link>
             <button

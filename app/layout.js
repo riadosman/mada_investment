@@ -7,8 +7,8 @@ import Script from "next/script";
 const cairoSans = Cairo({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "شركة ابيان للاستثمار",
-  description: "تقدم شركة ابيان للاستثمار الخدمات الاستثمارية والتمويلية",
+  title: "شركة ابيان المالية",
+  description: "تقدم شركة ابيان المالية الخدمات الاستثمارية والتمويلية",
 };
 
 export default function RootLayout({ children }) {
