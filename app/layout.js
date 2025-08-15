@@ -19,18 +19,15 @@ export default function RootLayout({ children }) {
           src="https://www.googletagmanager.com/gtag/js?id=AW-11081777142"
           strategy="afterInteractive"
         />
-        <Script
-          id="google-ads-gtag"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-11081777142');
-          `,
-          }}
-        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-11081777142');
+        `}
+        </Script>
       </head>
       <body className={`${cairoSans.variable} antialiased`}>
         <Header />
