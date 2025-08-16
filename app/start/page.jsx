@@ -16,15 +16,40 @@ const Start = () => {
   const route = useRouter();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    // Special handling for phone field
+    if (name === "phone") {
+      // Remove any non-digit characters
+      const digitsOnly = value.replace(/\D/g, "");
+
+      // If user tries to delete everything or enters something that doesn't start with 5
+      if (
+        digitsOnly.length === 0 ||
+        (digitsOnly.length > 0 && digitsOnly[0] !== "5")
+      ) {
+        return; // Don't update if it doesn't start with 5 or is empty
+      }
+
+      // Limit to 9 digits (5 + 8 more digits)
+      const limitedDigits = digitsOnly.slice(0, 9);
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: limitedDigits,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
+
   const isSaudiPhone = (phone) => {
-    const saudiPattern = /^(\+9665\d{8}|05\d{8})$/;
-    return saudiPattern.test(phone);
+    // Check if phone has exactly 9 digits and starts with 5
+    return phone.length === 9 && phone[0] === "5";
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -39,9 +64,16 @@ const Start = () => {
       return;
     }
     try {
+      // Send the full phone number with country code
+      const phoneWithCountryCode = `+966${formData.phone}`;
+      const submissionData = {
+        ...formData,
+        phone: phoneWithCountryCode,
+      };
+
       const res = await fetch("/api/send-to-google", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
@@ -89,7 +121,7 @@ const Start = () => {
       name: "phone",
       label: "رقم الهاتف",
       type: "tel",
-      placeholder: "+9665XXXXXXXX",
+      placeholder: "5XXXXXXXX",
       icon: Phone,
       required: true,
     },
@@ -224,70 +256,139 @@ const Start = () => {
                 })}
               </div>
 
-              {/* Email and Phone Fields */}
-              {inputFields.slice(2).map((field) => {
-                const Icon = field.icon;
-                return (
-                  <div key={field.name} className="relative">
-                    <label className="block text-sm font-bold text-gray-700 mb-2">
-                      {field.label}
-                      {field.required && (
-                        <span
-                          className="mr-1"
-                          style={{ color: "var(--primary-color)" }}
-                        >
-                          *
-                        </span>
-                      )}
-                    </label>
+              {/* Email Field */}
+              <div className="relative">
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  البريد الإلكتروني
+                  <span
+                    className="mr-1"
+                    style={{ color: "var(--primary-color)" }}
+                  >
+                    *
+                  </span>
+                </label>
 
-                    <div className="relative">
-                      <input
-                        type={field.type}
-                        name={field.name}
-                        value={formData[field.name]}
-                        onChange={handleInputChange}
-                        onFocus={() => setFocusedField(field.name)}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder={field.placeholder}
-                        required={field.required}
-                        className={`w-full px-4 py-4 pr-12 border-2 rounded-xl text-right font-medium transition-all duration-300 focus:outline-none focus:shadow-lg ${
-                          focusedField === field.name
-                            ? "border-transparent shadow-lg"
-                            : "border-gray-200 hover:border-gray-300"
-                        }`}
-                        style={
-                          focusedField === field.name
-                            ? {
-                                boxShadow: `0 0 0 2px var(--primary-color), 0 10px 25px rgba(3, 227, 150, 0.1)`,
-                              }
-                            : {}
-                        }
-                      />
+                <div className="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    onFocus={() => setFocusedField("email")}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder="example@email.com"
+                    required
+                    className={`w-full px-4 py-4 pr-12 border-2 rounded-xl text-right font-medium transition-all duration-300 focus:outline-none focus:shadow-lg ${
+                      focusedField === "email"
+                        ? "border-transparent shadow-lg"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                    style={
+                      focusedField === "email"
+                        ? {
+                            boxShadow: `0 0 0 2px var(--primary-color), 0 10px 25px rgba(3, 227, 150, 0.1)`,
+                          }
+                        : {}
+                    }
+                  />
 
-                      <div
-                        className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                          focusedField === field.name ? "scale-110" : ""
-                        }`}
-                        style={{
-                          background:
-                            focusedField === field.name
-                              ? `linear-gradient(135deg, var(--primary-color), var(--secondary-color))`
-                              : "#f1f5f9",
-                        }}
-                      >
-                        <Icon
-                          className={`w-4 h-4 transition-colors duration-300 ${
-                            focusedField === field.name
-                              ? "text-white"
-                              : "text-gray-500"
-                          }`}
-                        />
-                      </div>
-                    </div>
+                  <div
+                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      focusedField === "email" ? "scale-110" : ""
+                    }`}
+                    style={{
+                      background:
+                        focusedField === "email"
+                          ? `linear-gradient(135deg, var(--primary-color), var(--secondary-color))`
+                          : "#f1f5f9",
+                    }}
+                  >
+                    <Mail
+                      className={`w-4 h-4 transition-colors duration-300 ${
+                        focusedField === "email"
+                          ? "text-white"
+                          : "text-gray-500"
+                      }`}
+                    />
                   </div>
-                );
-              })}
+                </div>
+              </div>
+
+              {/* Phone Field with Fixed Country Code */}
+              <div className="relative">
+                <label className="block text-sm font-bold text-gray-700 mb-2">
+                  رقم الهاتف
+                  <span
+                    className="mr-1"
+                    style={{ color: "var(--primary-color)" }}
+                  >
+                    *
+                  </span>
+                </label>
+
+                <div className="relative">
+                  <div className="flex">
+                    {/* Country Code (Fixed) */}
+                    <div
+                      className="flex items-center px-3 border-2 border-l-0 rounded-r-xl bg-gray-50 border-gray-200"
+                      style={
+                        focusedField === "phone"
+                          ? {
+                              borderColor: "var(--primary-color)",
+                              boxShadow: `0 0 0 2px var(--primary-color)`,
+                            }
+                          : {}
+                      }
+                    >
+                      <span className="text-gray-700 font-medium">+966</span>
+                    </div>
+
+                    {/* Phone Number Input */}
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      onFocus={() => setFocusedField("phone")}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder="5XXXXXXXX"
+                      required
+                      className={`flex-1 px-4 py-4 pr-12 border-2 border-r-0 rounded-l-xl text-right font-medium transition-all duration-300 focus:outline-none focus:shadow-lg ${
+                        focusedField === "phone"
+                          ? "border-transparent shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                      style={
+                        focusedField === "phone"
+                          ? {
+                              boxShadow: `0 0 0 2px var(--primary-color), 0 10px 25px rgba(3, 227, 150, 0.1)`,
+                            }
+                          : {}
+                      }
+                    />
+                  </div>
+
+                  <div
+                    className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      focusedField === "phone" ? "scale-110" : ""
+                    }`}
+                    style={{
+                      background:
+                        focusedField === "phone"
+                          ? `linear-gradient(135deg, var(--primary-color), var(--secondary-color))`
+                          : "#f1f5f9",
+                    }}
+                  >
+                    <Phone
+                      className={`w-4 h-4 transition-colors duration-300 ${
+                        focusedField === "phone"
+                          ? "text-white"
+                          : "text-gray-500"
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
 
               {/* Divider */}
               <div
